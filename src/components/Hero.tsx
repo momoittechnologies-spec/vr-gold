@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, ShieldCheck, CheckCircle2, ArrowRight, Sparkles, MapPin, Zap } from "lucide-react";
 
 export default function Hero() {
@@ -14,6 +15,20 @@ export default function Hero() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Official Brand Emblem Badge */}
+        <div className="inline-block mb-4">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-white p-1.5 border-2 border-gold-400 shadow-xl shadow-gold-500/25 mx-auto hover:scale-105 transition-transform">
+            <Image
+              src="/logo.png"
+              alt="VR GOLD BUYER'S Official Emblem"
+              width={112}
+              height={112}
+              className="w-full h-full object-contain"
+              priority
+            />
+          </div>
+        </div>
+
         {/* Eyebrow Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gold-300 shadow-sm shadow-gold-500/10 mb-6">
           <span className="flex h-2 w-2 rounded-full bg-gold-500 animate-pulse" />

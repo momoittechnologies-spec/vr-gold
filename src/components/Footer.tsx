@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, MapPin, ShieldCheck, Heart } from "lucide-react";
 
 export default function Footer() {
@@ -11,9 +12,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-12 border-b border-navy-900">
           {/* Brand */}
           <div className="space-y-4 lg:col-span-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold-500 to-amber-700 flex items-center justify-center text-white font-black text-base shadow-md">
-                VR
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full overflow-hidden bg-white p-0.5 border border-gold-400 shadow-md shrink-0 flex items-center justify-center">
+                <Image
+                  src="/logo.png"
+                  alt="VR GOLD BUYER'S Official Logo"
+                  width={44}
+                  height={44}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="text-xl font-black tracking-tight text-white">
                 VR <span className="text-gold-400">GOLD BUYER&apos;S</span>

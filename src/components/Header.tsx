@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, MapPin, ShieldCheck, Menu, X, Coins, Sparkles } from "lucide-react";
 
 export default function Header() {
@@ -35,8 +36,15 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500 to-amber-700 flex items-center justify-center text-white shadow-md shadow-gold-500/25 group-hover:scale-105 transition-transform font-black text-lg">
-            VR
+          <div className="w-11 h-11 rounded-full overflow-hidden border border-gold-400/80 shadow-md shadow-gold-500/20 group-hover:scale-105 transition-transform shrink-0 bg-white p-0.5 flex items-center justify-center">
+            <Image
+              src="/logo.png"
+              alt="VR GOLD BUYER'S Official Logo"
+              width={44}
+              height={44}
+              className="w-full h-full object-contain"
+              priority
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-xl sm:text-2xl font-black tracking-tight text-navy-950 leading-none">
