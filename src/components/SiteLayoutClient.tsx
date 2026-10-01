@@ -28,7 +28,7 @@ export default function SiteLayoutClient({ children }: Props) {
       <div className="min-h-screen flex flex-col font-sans selection:bg-gold-500 selection:text-white">
         <LiveRatesTicker onOpenBooking={() => handleOpenBooking()} />
         <Header onOpenBooking={() => handleOpenBooking()} />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow pb-16 sm:pb-0">{children}</main>
         <WhatsAppFloat />
         <Footer />
 

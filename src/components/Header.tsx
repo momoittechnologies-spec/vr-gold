@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, MapPin, Menu, X, ShieldCheck, Search, Lock, Calendar, Building2 } from 'lucide-react';
+import { Phone, Menu, X, Calendar, Lock } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageToggle from '@/components/LanguageToggle';
 
@@ -13,233 +13,219 @@ interface Props {
 
 export default function Header({ onOpenBooking }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { lang, isTelugu } = useLanguage();
+  const { isTelugu } = useLanguage();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gold-200/80 shadow-xs">
-      {/* Top micro strip with Banking Regulatory Badge */}
-      <div className="bg-gradient-to-r from-[#050B17] via-navy-900 to-[#050B17] text-white text-[11px] sm:text-xs py-1.5 px-4 border-b border-gold-500/20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs">
+      
+      {/* Top Institutional Micro-Strip */}
+      <div className="bg-[#060D1A] text-slate-300 text-[11px] py-1 px-4 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
+            <span className="flex h-1.5 w-1.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
             </span>
             <span
-              className="text-gold-200 font-semibold truncate"
+              className="text-slate-300 font-medium truncate"
               style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
             >
               {isTelugu
-                ? '⚡ కాల్ చేసిన వెంటనే మీ దగ్గరకే వచ్చి డబ్బులు కట్టి విడిపించబడును (Doorstep Gold Loan Release)'
-                : '⚡ Immediate Doorstep Bank Gold Loan Clearance & Spot Cash Disbursal | Kadapa'}
+                ? 'కడప NGO కాలనీ బ్రాంచ్ · తక్షణ గోల్డ్ వ్యాల్యుయేషన్ & తాకట్టు విడుదల సేవలు'
+                : 'Kadapa NGO Colony Branch · Live Bullion Valuation & Pledged Gold Release Desk'}
             </span>
           </div>
-          <div className="hidden md:flex items-center gap-4 text-gray-300">
-            <span className="flex items-center gap-1 text-[11px]">
-              <ShieldCheck className="w-3 h-3 text-gold-400" />
-              <span>{isTelugu ? 'కడప రిజిస్టర్డ్ బులియన్ డెస్క్' : 'Kadapa Registered Bullion Desk'}</span>
-            </span>
-            <span className="text-gold-300 font-bold text-[11px]">
-              {isTelugu ? 'నేటి కడప అత్యధిక స్పాట్ రేటు' : 'Highest Daily Spot Cash Rate in Kadapa'}
-            </span>
+          <div className="hidden sm:flex items-center gap-4 text-slate-400">
+            <span>Mon–Sun: 9:00 AM – 8:30 PM</span>
+            <a href="tel:8978973576" className="text-gold-400 font-bold hover:underline">
+              Helpline: 8978973576
+            </a>
           </div>
         </div>
       </div>
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-        {/* Brand Logo */}
+        
+        {/* Brand Logo & Name */}
         <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-11 h-11 rounded-full overflow-hidden border border-gold-400/80 shadow-md shadow-gold-500/20 group-hover:scale-105 transition-transform shrink-0 bg-white p-0.5 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full overflow-hidden border border-gold-400 bg-white p-0.5 shadow-xs shrink-0 flex items-center justify-center">
             <Image
               src="/logo.png"
-              alt="VR GOLD BUYER'S Official Logo"
-              width={44}
-              height={44}
+              alt="VR GOLD BUYER'S Logo"
+              width={40}
+              height={40}
               className="w-full h-full object-contain"
               priority
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl font-black tracking-tight text-navy-950 leading-none">
+            <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 leading-none">
               VR <span className="text-gold-600">GOLD</span> BUYER&apos;S
             </span>
-            <span className="text-[10px] sm:text-[11px] font-bold tracking-widest text-gray-500 uppercase mt-0.5">
-              Gold Release &amp; Renewal · Kadapa
+            <span className="text-[10px] tracking-wider text-slate-500 font-bold uppercase mt-0.5">
+              Kadapa Bullion Desk
             </span>
           </div>
         </Link>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-5 text-sm font-semibold text-gray-700">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-700">
+          <Link href="/#services" className="hover:text-gold-600 transition-colors">
+            {isTelugu ? 'బంగారు అమ్మకం' : 'Sell Gold'}
+          </Link>
+          <Link href="/#pledged-gold" className="hover:text-gold-600 transition-colors">
+            {isTelugu ? 'తాకట్టు విడుదల' : 'Release Pledged Gold'}
+          </Link>
+          <Link href="/#rates" className="hover:text-gold-600 transition-colors">
+            {isTelugu ? 'లైవ్ రేట్లు' : 'Gold Rates'}
+          </Link>
           <Link href="/#calculator" className="hover:text-gold-600 transition-colors">
-            {isTelugu ? 'కాలిక్యులేటర్' : 'Gold Calculator'}
-          </Link>
-          <Link href="/#doorstep" className="hover:text-gold-600 transition-colors">
-            {isTelugu ? 'డోర్‌స్టెప్ సేవ' : 'Doorstep Clearance'}
-          </Link>
-          <Link href="/#instagram" className="hover:text-rose-600 transition-colors flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-            <span className="font-bold text-gray-800">{isTelugu ? 'లైవ్ రీల్స్' : 'Reels'}</span>
+            {isTelugu ? 'కాలిక్యులేటర్' : 'Calculator'}
           </Link>
           <Link href="/#process" className="hover:text-gold-600 transition-colors">
             {isTelugu ? 'ప్రాసెస్' : 'How It Works'}
           </Link>
           <Link href="/#location" className="hover:text-gold-600 transition-colors">
-            {isTelugu ? 'కడప బ్రాంచ్' : 'Kadapa Branch'}
-          </Link>
-          <Link
-            href="/track"
-            className="inline-flex items-center gap-1 text-gold-700 hover:text-gold-800 font-bold bg-gold-50 px-2.5 py-1 rounded-lg border border-gold-200 transition-colors"
-          >
-            <Search className="w-3.5 h-3.5" />
-            <span>{isTelugu ? 'తాకట్టు ట్రాక్' : 'Track Pledge'}</span>
+            {isTelugu ? 'సంప్రదించండి' : 'Contact'}
           </Link>
         </nav>
 
-        {/* Action Buttons */}
-        <div className="hidden sm:flex items-center gap-2">
-          {/* Language Toggle */}
+        {/* Desktop Actions */}
+        <div className="hidden sm:flex items-center gap-2.5">
+          {/* Language Switcher */}
           <LanguageToggle variant="header" />
 
+          {/* Primary Action Button */}
           {onOpenBooking && (
             <button
               onClick={onOpenBooking}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gold-50 hover:bg-gold-100 text-gold-950 border border-gold-300 text-xs font-black transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 text-xs font-black shadow-xs transition-transform hover:scale-102 cursor-pointer"
             >
-              <Calendar className="w-3.5 h-3.5 text-gold-700" />
-              <span>{isTelugu ? 'బుకింగ్' : 'Book Visit'}</span>
+              <Calendar className="w-3.5 h-3.5" />
+              <span>{isTelugu ? 'విజిట్ బుక్ చేయండి' : 'Book a Visit'}</span>
             </button>
           )}
 
           <a
-            href="https://www.instagram.com/vrgoldbuyers2026/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-purple-50 via-rose-50 to-amber-50 hover:from-purple-100 hover:to-amber-100 text-rose-700 border border-rose-200 text-xs font-black transition-all"
-            title="Follow @vrgoldbuyers2026 on Instagram"
-          >
-            <svg className="w-3.5 h-3.5 text-rose-600" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-            <span className="hidden xl:inline">@vrgold</span>
-          </a>
-
-          <a
             href="tel:8978973576"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-navy-950 text-xs font-bold transition-all"
+            className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors"
+            title="Call Helpline"
           >
             <Phone className="w-3.5 h-3.5 text-gold-600" />
-            <span>8978973576</span>
+            <span className="hidden xl:inline">8978973576</span>
           </a>
 
           <Link
             href="/admin"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#050B17] hover:bg-navy-900 text-gold-300 text-xs font-bold shadow-xs transition-colors"
-            title="VR Gold Staff & Management Portal"
+            className="inline-flex items-center p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            title="Staff CRM"
           >
-            <Lock className="w-3 h-3 text-gold-400" />
-            <span>CRM</span>
+            <Lock className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-gray-700 hover:text-navy-950 rounded-lg hover:bg-gray-100"
-          aria-label="Toggle Menu"
+          className="lg:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+          aria-label="Toggle navigation menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
+
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-4 space-y-2.5 shadow-lg text-sm">
-          {/* Mobile Language Toggle at top */}
+        <div className="lg:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 shadow-lg text-sm">
+          
+          {/* Language Switcher */}
           <LanguageToggle variant="mobile" />
 
+          {/* Book Visit Primary CTA */}
           {onOpenBooking && (
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenBooking();
               }}
-              className="w-full text-left py-2.5 px-3 rounded-xl bg-gold-500 text-navy-950 font-black flex items-center justify-between"
+              className="w-full text-center py-2.5 px-4 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 text-navy-950 font-black text-xs shadow-xs flex items-center justify-center gap-2"
             >
-              <span>{isTelugu ? '🚗 డోర్‌స్టెప్ బ్యాంక్ రిలీజ్ బుక్ చేయండి' : '🚗 Book Doorstep Bank Release'}</span>
-              <span>→</span>
+              <Calendar className="w-4 h-4" />
+              <span>{isTelugu ? 'డోర్‌స్టెప్ విజిట్ బుక్ చేయండి' : 'Book a Visit'}</span>
             </button>
           )}
 
-          <Link
-            href="/#calculator"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
-          >
-            💰 {isTelugu ? 'లైవ్ గోల్డ్ రేట్ కాలిక్యులేటర్' : 'Live Gold Rate Calculator'}
-          </Link>
-          <Link
-            href="/track"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg font-bold text-gold-700 hover:bg-gold-50"
-          >
-            🔍 {isTelugu ? 'మీ తాకట్టు స్టేటస్ ట్రాక్ చేయండి' : 'Track Your Pledge Status'}
-          </Link>
-          <Link
-            href="/#doorstep"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
-          >
-            🚗 {isTelugu ? 'డోర్‌స్టెప్ బ్యాంక్ క్లియరెన్స్' : 'Doorstep Bank Clearance'}
-          </Link>
-          <Link
-            href="/#location"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
-          >
-            📍 {isTelugu ? 'కడప NGO కాలనీ బ్రాంచ్' : 'Kadapa NGO Colony Branch'}
-          </Link>
-          <Link
-            href="/#instagram"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg font-bold text-rose-700 bg-rose-50/60 hover:bg-rose-100"
-          >
-            🎥 {isTelugu ? 'ఇన్‌స్టాగ్రామ్ రీల్స్ & కస్టమర్ వీడియోలు' : 'Instagram Reels & Customer Videos'}
-          </Link>
-          <a
-            href="https://www.instagram.com/vrgoldbuyers2026/"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2.5 rounded-xl font-black text-white bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] shadow-xs text-center text-xs"
-          >
-            ✨ {isTelugu ? 'సింగిల్ ట్యాప్‌తో ఫాలో అవ్వండి (@vrgoldbuyers2026)' : 'Follow @vrgoldbuyers2026 on Instagram'}
-          </a>
-          <Link
-            href="/admin"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-100"
-          >
-            🔒 {isTelugu ? 'VR Gold స్టాఫ్ & CRM లాగిన్' : 'VR Gold Staff & CRM Login'}
-          </Link>
+          <div className="space-y-1 pt-1 font-semibold text-slate-800 text-xs">
+            <Link
+              href="/#services"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+            >
+              {isTelugu ? 'బంగారు ఆభరణాల అమ్మకం' : 'Sell Gold Jewellery'}
+            </Link>
+            <Link
+              href="/#pledged-gold"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+            >
+              {isTelugu ? 'బ్యాంకు తాకట్టు విడుదల' : 'Release Pledged Gold'}
+            </Link>
+            <Link
+              href="/#rates"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+            >
+              {isTelugu ? 'నేటి లైవ్ బులియన్ రేట్లు' : 'Live Gold Rates'}
+            </Link>
+            <Link
+              href="/#calculator"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+            >
+              {isTelugu ? 'గోల్డ్ వ్యాల్యుయేషన్ కాలిక్యులేటర్' : 'Valuation Calculator'}
+            </Link>
+            <Link
+              href="/#process"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+            >
+              {isTelugu ? 'VR GOLD విధానం (5 దశలు)' : 'How It Works'}
+            </Link>
+            <Link
+              href="/#location"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+            >
+              {isTelugu ? 'కడప బ్రాంచ్ & కాంటాక్ట్' : 'Kadapa Branch & Contact'}
+            </Link>
+            <Link
+              href="/track"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-gold-700 hover:bg-gold-50"
+            >
+              🔍 {isTelugu ? 'తాకట్టు రిఫరెన్స్ ట్రాకింగ్' : 'Track Pledge Status'}
+            </Link>
+          </div>
 
-          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">
+          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100">
             <a
               href="tel:8978973576"
-              className="flex items-center justify-center gap-1.5 p-2.5 rounded-lg bg-gray-100 font-bold text-xs text-navy-950"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-slate-100 font-bold text-xs text-slate-800"
             >
               <Phone className="w-3.5 h-3.5 text-gold-600" />
-              8978973576
+              <span>8978973576</span>
             </a>
             <a
               href="tel:8978977465"
-              className="flex items-center justify-center gap-1.5 p-2.5 rounded-lg bg-gold-600 font-bold text-xs text-white"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-slate-100 font-bold text-xs text-slate-800"
             >
-              <Phone className="w-3.5 h-3.5" />
-              8978977465
+              <Phone className="w-3.5 h-3.5 text-gold-600" />
+              <span>8978977465</span>
             </a>
           </div>
+
         </div>
       )}
     </header>

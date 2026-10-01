@@ -1,103 +1,167 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Phone, CheckCircle2, Building, ShieldCheck, ArrowRight, Wallet, Clock, Users } from "lucide-react";
+import React from 'react';
+import { Car, MapPin, FileCheck2, UserCheck, ShieldCheck, ArrowRight, Phone } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
-export default function DoorstepService() {
-  const steps = [
-    {
-      num: "01",
-      title: "Call Or WhatsApp Our Kadapa Desk",
-      desc: "Contact 8978973576 or 8978977465 with your bank pledge receipt / loan slip and get an immediate estimation.",
-      icon: Phone,
-    },
-    {
-      num: "02",
-      title: "We Arrive At Your Bank / Finance Branch",
-      desc: "Our executive meets you directly at SBI, Andhra Pragathi Grameena Bank, Canara Bank, Muthoot, or Manappuram in Kadapa.",
-      icon: Building,
-    },
-    {
-      num: "03",
-      title: "We Pay The Full Loan Settlement",
-      desc: "VR Gold clears the complete principal and accrued interest directly with the bank/finance company counter.",
-      icon: Wallet,
-    },
-    {
-      num: "04",
-      title: "Collect Your Released Gold & Cash Difference",
-      desc: "Your gold is officially released. We verify purity in front of you and pay you the remaining cash or instant UPI balance.",
-      icon: CheckCircle2,
-    },
-  ];
+interface Props {
+  onOpenBooking?: (grams?: number, bank?: string) => void;
+}
+
+export default function DoorstepService({ onOpenBooking }: Props) {
+  const { isTelugu } = useLanguage();
 
   return (
-    <section id="doorstep" className="py-16 md:py-24 bg-white relative">
+    <section id="doorstep" className="py-16 md:py-20 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black uppercase tracking-wider mb-4 border border-emerald-300">
-            <span>కాల్ చేసిన వెంటనే మీ దగ్గరకే వచ్చి డబ్బులు కట్టి విడిపించబడును</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-navy-950 tracking-tight">
-            Doorstep Bank Gold Release in Kadapa
+        
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <span className="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+            {isTelugu ? 'ప్రత్యేక సౌకర్యం' : 'Premium Concierge Service'}
+          </span>
+          <h2
+            className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight mt-3"
+            style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+          >
+            {isTelugu ? 'డోర్‌స్టెప్ & బ్యాంక్ ఎస్కార్ట్ సేవ' : 'Doorstep & Bank Branch Escort Service'}
           </h2>
-          <p className="text-base text-gray-600 mt-4 leading-relaxed">
-            Stop worrying about arranging tens of thousands of rupees to clear your gold loan. We provide the full cash backing, visit the bank with you, and settle everything on the spot.
+          <p
+            className="text-xs sm:text-sm text-slate-600 mt-2.5"
+            style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+          >
+            {isTelugu
+              ? 'మీరు మా బ్రాంచ్‌కు రాలేని పరిస్థితుల్లో లేదా బ్యాంక్ వద్దకే నిధులతో హాజరు కావాలనుకున్నప్పుడు మా అధికారిక ప్రతినిధి నేరుగా వస్తారు.'
+              : 'Our verified officer accompanies you to your bank branch or residence with verified settlement funds for a seamless clearance experience.'}
           </p>
         </div>
 
-        {/* 4-Step Process Grid */}
+        {/* 4 Feature Pillars Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {steps.map((step) => {
-            const Icon = step.icon;
-            return (
-              <div
-                key={step.num}
-                className="p-6 rounded-2xl bg-gray-50 hover:bg-gold-50/50 border border-gray-200 hover:border-gold-300 transition-all group relative"
-              >
-                <div className="text-3xl font-black text-gold-400 group-hover:text-gold-600 transition-colors mb-3">
-                  {step.num}
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-navy-950 text-gold-400 flex items-center justify-center mb-4 shadow-sm">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-navy-950 mb-2">{step.title}</h3>
-                <p className="text-xs text-gray-600 leading-relaxed">{step.desc}</p>
+          
+          {/* Pillar 1: What the service is */}
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-navy-950 text-gold-400 flex items-center justify-center mb-4">
+                <Car className="w-5 h-5" />
               </div>
-            );
-          })}
+              <h3
+                className="text-sm font-bold text-slate-900 mb-2"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu ? '1. ఈ సేవ ఏమిటి?' : '1. What is the Service?'}
+              </h3>
+              <p
+                className="text-xs text-slate-600 leading-relaxed"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu
+                  ? 'VR GOLD అధికారిక ప్రతినిధి అవసరమైన నగదు/డిజిటల్ నిధులతో నేరుగా మీ వద్దకు లేదా మీ బ్యాంక్ బ్రాంచ్‌కు వచ్చి లావాదేవీని పూర్తి చేయడం.'
+                  : 'An authorized VR GOLD representative arrives directly at your location or bank counter with full clearance liquidity.'}
+              </p>
+            </div>
+            <span className="text-[10px] text-slate-400 font-bold uppercase mt-4 block">Official Facilitation</span>
+          </div>
+
+          {/* Pillar 2: Where it is available */}
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-navy-950 text-gold-400 flex items-center justify-center mb-4">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <h3
+                className="text-sm font-bold text-slate-900 mb-2"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu ? '2. ఎక్కడ అందుబాటులో ఉంది?' : '2. Where is it Available?'}
+              </h3>
+              <p
+                className="text-xs text-slate-600 leading-relaxed"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu
+                  ? 'కడప నగరం, NGO కాలనీ, Y-జంక్షన్ పరిసరాలు, ప్రొద్దుటూరు మరియు వైఎస్సార్ కడప జిల్లాలోని ప్రధాన ప్రాంతాలలో అందుబాటులో ఉంది.'
+                  : 'Covering Kadapa municipal limits, NGO Colony, Y-Junction area, Proddatur, and key regional hubs across Kadapa district.'}
+              </p>
+            </div>
+            <span className="text-[10px] text-slate-400 font-bold uppercase mt-4 block">Kadapa & Regional</span>
+          </div>
+
+          {/* Pillar 3: What customer provides */}
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-navy-950 text-gold-400 flex items-center justify-center mb-4">
+                <FileCheck2 className="w-5 h-5" />
+              </div>
+              <h3
+                className="text-sm font-bold text-slate-900 mb-2"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu ? '3. మీరు ఏమి అందించాలి?' : '3. What to Provide?'}
+              </h3>
+              <p
+                className="text-xs text-slate-600 leading-relaxed"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu
+                  ? 'మీ చెల్లుబాటు అయ్యే ప్రభుత్వ గుర్తింపు కార్డు (ఆధార్/పాన్), బ్యాంక్ తాకట్టు స్లిప్ లేదా రశీదు మరియు బంగారం కొనుగోలు వివరాలు.'
+                  : 'Valid government identity proof (Aadhaar/PAN card) and the original pledge receipt or bank loan documentation.'}
+              </p>
+            </div>
+            <span className="text-[10px] text-slate-400 font-bold uppercase mt-4 block">ID & Loan Receipt</span>
+          </div>
+
+          {/* Pillar 4: What happens during visit */}
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+            <div>
+              <div className="w-10 h-10 rounded-xl bg-navy-950 text-gold-400 flex items-center justify-center mb-4">
+                <UserCheck className="w-5 h-5" />
+              </div>
+              <h3
+                className="text-sm font-bold text-slate-900 mb-2"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu ? '4. విజిట్ సమయంలో ఏం జరుగుతుంది?' : '4. During the Visit'}
+              </h3>
+              <p
+                className="text-xs text-slate-600 leading-relaxed"
+                style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+              >
+                {isTelugu
+                  ? 'అధికారి మీ సమక్షంలోనే బ్యాంకు కౌంటర్‌లో లోన్ క్లోజ్ చేస్తారు. బంగారం విడిపించి స్వచ్ఛత నిర్ధారించి మిగులు నగదు వెంటనే అందజేస్తారు.'
+                  : 'The officer settles the loan directly at the bank counter, retrieves the ornaments, verifies purity, and hands over your balance.'}
+              </p>
+            </div>
+            <span className="text-[10px] text-slate-400 font-bold uppercase mt-4 block">Immediate Settlement</span>
+          </div>
+
         </div>
 
-        {/* Direct Callout Card */}
-        <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-gold-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-gold-400 uppercase tracking-widest block">
-              Urgent Cash Need in Kadapa?
-            </span>
-            <h3 className="text-xl sm:text-2xl font-black text-white">
-              Do not let high bank interest eat up your gold&apos;s true value.
-            </h3>
-            <p className="text-xs sm:text-sm text-gray-300 max-w-xl">
-              Call us now. We will dispatch our authorized executive to your location anywhere across Kadapa city and nearby mandals.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+        {/* CTA Bar */}
+        <div className="text-center">
+          {onOpenBooking ? (
+            <button
+              type="button"
+              onClick={() => onOpenBooking()}
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-navy-950 hover:bg-slate-900 text-gold-300 hover:text-white font-bold text-sm shadow-md transition-all hover:scale-102 cursor-pointer"
+            >
+              <span>{isTelugu ? 'డోర్‌స్టెప్ విజిట్ బుక్ చేయండి' : 'Request a Visit'}</span>
+              <ArrowRight className="w-4 h-4 text-gold-400" />
+            </button>
+          ) : (
             <a
               href="tel:8978973576"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-navy-950 font-black text-xs shadow-lg transition-transform hover:scale-105"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-navy-950 text-gold-300 font-bold text-sm shadow-md"
             >
               <Phone className="w-4 h-4" />
-              <span>Call 8978973576</span>
+              <span>Call Kadapa Desk: 8978973576</span>
             </a>
-            <a
-              href="tel:8978977465"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition-colors"
-            >
-              <Phone className="w-4 h-4 text-gold-400" />
-              <span>Call 8978977465</span>
-            </a>
-          </div>
+          )}
+          <p className="text-[11px] text-slate-500 mt-2.5">
+            {isTelugu ? 'కడప జిల్లాలోని బ్యాంక్ శాఖలకు సేవ అందుబాటులో ఉంది' : 'Available across scheduled bank branches in Kadapa'}
+          </p>
         </div>
+
       </div>
     </section>
   );
