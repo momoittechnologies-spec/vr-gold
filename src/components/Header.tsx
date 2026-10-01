@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, MapPin, Menu, X, ShieldCheck, Search, Lock, Calendar } from 'lucide-react';
+import { Phone, MapPin, Menu, X, ShieldCheck, Search, Lock, Calendar, Building2 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import LanguageToggle from '@/components/LanguageToggle';
 
 interface Props {
   onOpenBooking?: () => void;
@@ -11,27 +13,35 @@ interface Props {
 
 export default function Header({ onOpenBooking }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { lang, isTelugu } = useLanguage();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gold-200/80 shadow-xs">
-      {/* Top micro strip */}
-      <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 text-white text-[11px] sm:text-xs py-1.5 px-4 border-b border-gold-500/20">
+      {/* Top micro strip with Banking Regulatory Badge */}
+      <div className="bg-gradient-to-r from-[#050B17] via-navy-900 to-[#050B17] text-white text-[11px] sm:text-xs py-1.5 px-4 border-b border-gold-500/20">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
             </span>
-            <span className="text-gold-200 font-semibold truncate">
-              ⚡ కాల్ చేసిన వెంటనే మీ దగ్గరకే వచ్చి డబ్బులు కట్టి విడిపించబడును (Doorstep Gold Loan Release)
+            <span
+              className="text-gold-200 font-semibold truncate"
+              style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+            >
+              {isTelugu
+                ? '⚡ కాల్ చేసిన వెంటనే మీ దగ్గరకే వచ్చి డబ్బులు కట్టి విడిపించబడును (Doorstep Gold Loan Release)'
+                : '⚡ Immediate Doorstep Bank Gold Loan Clearance & Spot Cash Disbursal | Kadapa'}
             </span>
           </div>
           <div className="hidden md:flex items-center gap-4 text-gray-300">
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-gold-400" />
-              NGO Colony, Kadapa
+            <span className="flex items-center gap-1 text-[11px]">
+              <ShieldCheck className="w-3 h-3 text-gold-400" />
+              <span>{isTelugu ? 'కడప రిజిస్టర్డ్ బులియన్ డెస్క్' : 'Kadapa Registered Bullion Desk'}</span>
             </span>
-            <span className="text-gold-300 font-bold">Today: Best Spot Cash Rate in Kadapa</span>
+            <span className="text-gold-300 font-bold text-[11px]">
+              {isTelugu ? 'నేటి కడప అత్యధిక స్పాట్ రేటు' : 'Highest Daily Spot Cash Rate in Kadapa'}
+            </span>
           </div>
         </div>
       </div>
@@ -63,39 +73,42 @@ export default function Header({ onOpenBooking }: Props) {
         {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-5 text-sm font-semibold text-gray-700">
           <Link href="/#calculator" className="hover:text-gold-600 transition-colors">
-            Gold Calculator
+            {isTelugu ? 'కాలిక్యులేటర్' : 'Gold Calculator'}
           </Link>
           <Link href="/#doorstep" className="hover:text-gold-600 transition-colors">
-            Doorstep Service
+            {isTelugu ? 'డోర్‌స్టెప్ సేవ' : 'Doorstep Clearance'}
           </Link>
           <Link href="/#instagram" className="hover:text-rose-600 transition-colors flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-            <span className="font-bold text-gray-800">Reels</span>
+            <span className="font-bold text-gray-800">{isTelugu ? 'లైవ్ రీల్స్' : 'Reels'}</span>
           </Link>
           <Link href="/#process" className="hover:text-gold-600 transition-colors">
-            How It Works
+            {isTelugu ? 'ప్రాసెస్' : 'How It Works'}
           </Link>
           <Link href="/#location" className="hover:text-gold-600 transition-colors">
-            Kadapa Branch
+            {isTelugu ? 'కడప బ్రాంచ్' : 'Kadapa Branch'}
           </Link>
           <Link
             href="/track"
             className="inline-flex items-center gap-1 text-gold-700 hover:text-gold-800 font-bold bg-gold-50 px-2.5 py-1 rounded-lg border border-gold-200 transition-colors"
           >
             <Search className="w-3.5 h-3.5" />
-            <span>Track Pledge</span>
+            <span>{isTelugu ? 'తాకట్టు ట్రాక్' : 'Track Pledge'}</span>
           </Link>
         </nav>
 
         {/* Action Buttons */}
-        <div className="hidden sm:flex items-center gap-2.5">
+        <div className="hidden sm:flex items-center gap-2">
+          {/* Language Toggle */}
+          <LanguageToggle variant="header" />
+
           {onOpenBooking && (
             <button
               onClick={onOpenBooking}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gold-50 hover:bg-gold-100 text-gold-950 border border-gold-300 text-xs font-black transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gold-50 hover:bg-gold-100 text-gold-950 border border-gold-300 text-xs font-black transition-all cursor-pointer"
             >
               <Calendar className="w-3.5 h-3.5 text-gold-700" />
-              <span>Book Visit</span>
+              <span>{isTelugu ? 'బుకింగ్' : 'Book Visit'}</span>
             </button>
           )}
 
@@ -109,7 +122,7 @@ export default function Header({ onOpenBooking }: Props) {
             <svg className="w-3.5 h-3.5 text-rose-600" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
             </svg>
-            <span className="hidden xl:inline">Follow @vrgold</span>
+            <span className="hidden xl:inline">@vrgold</span>
           </a>
 
           <a
@@ -122,11 +135,11 @@ export default function Header({ onOpenBooking }: Props) {
 
           <Link
             href="/admin"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-navy-950 hover:bg-navy-900 text-gold-300 text-xs font-bold shadow-xs transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#050B17] hover:bg-navy-900 text-gold-300 text-xs font-bold shadow-xs transition-colors"
             title="VR Gold Staff & Management Portal"
           >
             <Lock className="w-3 h-3 text-gold-400" />
-            <span>Staff CRM</span>
+            <span>CRM</span>
           </Link>
         </div>
 
@@ -142,7 +155,10 @@ export default function Header({ onOpenBooking }: Props) {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-4 space-y-2 shadow-lg text-sm">
+        <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-4 space-y-2.5 shadow-lg text-sm">
+          {/* Mobile Language Toggle at top */}
+          <LanguageToggle variant="mobile" />
+
           {onOpenBooking && (
             <button
               onClick={() => {
@@ -151,44 +167,45 @@ export default function Header({ onOpenBooking }: Props) {
               }}
               className="w-full text-left py-2.5 px-3 rounded-xl bg-gold-500 text-navy-950 font-black flex items-center justify-between"
             >
-              <span>🚗 Book Doorstep Bank Release</span>
+              <span>{isTelugu ? '🚗 డోర్‌స్టెప్ బ్యాంక్ రిలీజ్ బుక్ చేయండి' : '🚗 Book Doorstep Bank Release'}</span>
               <span>→</span>
             </button>
           )}
+
           <Link
             href="/#calculator"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
           >
-            💰 Live Gold Rate Calculator
+            💰 {isTelugu ? 'లైవ్ గోల్డ్ రేట్ కాలిక్యులేటర్' : 'Live Gold Rate Calculator'}
           </Link>
           <Link
             href="/track"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gold-700 hover:bg-gold-50"
           >
-            🔍 Track Your Pledge Status
+            🔍 {isTelugu ? 'మీ తాకట్టు స్టేటస్ ట్రాక్ చేయండి' : 'Track Your Pledge Status'}
           </Link>
           <Link
             href="/#doorstep"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
           >
-            🚗 Doorstep Bank Clearance
+            🚗 {isTelugu ? 'డోర్‌స్టెప్ బ్యాంక్ క్లియరెన్స్' : 'Doorstep Bank Clearance'}
           </Link>
           <Link
             href="/#location"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
           >
-            📍 NGO Colony Branch Location
+            📍 {isTelugu ? 'కడప NGO కాలనీ బ్రాంచ్' : 'Kadapa NGO Colony Branch'}
           </Link>
           <Link
             href="/#instagram"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-rose-700 bg-rose-50/60 hover:bg-rose-100"
           >
-            🎥 Instagram Reels &amp; Customer Videos
+            🎥 {isTelugu ? 'ఇన్‌స్టాగ్రామ్ రీల్స్ & కస్టమర్ వీడియోలు' : 'Instagram Reels & Customer Videos'}
           </Link>
           <a
             href="https://www.instagram.com/vrgoldbuyers2026/"
@@ -197,14 +214,14 @@ export default function Header({ onOpenBooking }: Props) {
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2.5 rounded-xl font-black text-white bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] shadow-xs text-center text-xs"
           >
-            ✨ సింగిల్ ట్యాప్‌తో ఫాలో అవ్వండి (@vrgoldbuyers2026)
+            ✨ {isTelugu ? 'సింగిల్ ట్యాప్‌తో ఫాలో అవ్వండి (@vrgoldbuyers2026)' : 'Follow @vrgoldbuyers2026 on Instagram'}
           </a>
           <Link
             href="/admin"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-100"
           >
-            🔒 VR Gold Staff &amp; CRM Login
+            🔒 {isTelugu ? 'VR Gold స్టాఫ్ & CRM లాగిన్' : 'VR Gold Staff & CRM Login'}
           </Link>
 
           <div className="grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">

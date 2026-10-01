@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import BookVisitModal from '@/components/BookVisitModal';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 interface Props {
   children: React.ReactNode;
@@ -23,19 +24,21 @@ export default function SiteLayoutClient({ children }: Props) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans selection:bg-gold-500 selection:text-white">
-      <LiveRatesTicker onOpenBooking={() => handleOpenBooking()} />
-      <Header onOpenBooking={() => handleOpenBooking()} />
-      <main className="flex-grow">{children}</main>
-      <WhatsAppFloat />
-      <Footer />
+    <LanguageProvider>
+      <div className="min-h-screen flex flex-col font-sans selection:bg-gold-500 selection:text-white">
+        <LiveRatesTicker onOpenBooking={() => handleOpenBooking()} />
+        <Header onOpenBooking={() => handleOpenBooking()} />
+        <main className="flex-grow">{children}</main>
+        <WhatsAppFloat />
+        <Footer />
 
-      <BookVisitModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        initialGrams={modalGrams}
-        initialBank={modalBank}
-      />
-    </div>
+        <BookVisitModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          initialGrams={modalGrams}
+          initialBank={modalBank}
+        />
+      </div>
+    </LanguageProvider>
   );
 }

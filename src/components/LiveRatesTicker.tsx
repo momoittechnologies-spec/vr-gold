@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Clock, Phone } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface GoldRatesData {
   gold24k: number;
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export default function LiveRatesTicker({ onOpenBooking }: Props) {
+  const { isTelugu } = useLanguage();
   const [rates, setRates] = useState<GoldRatesData>({
     gold24k: 7520,
     gold22k: 6890,
@@ -51,26 +53,26 @@ export default function LiveRatesTicker({ onOpenBooking }: Props) {
 
   const cities = [
     {
-      name: 'KADAPA',
+      name: isTelugu ? 'కడప' : 'KADAPA',
       flag: '📍',
       r24: rates.gold24k,
       r22: rates.gold22k,
       highlight: true,
     },
     {
-      name: 'MUMBAI',
+      name: isTelugu ? 'ముంబై' : 'MUMBAI',
       flag: '🏙️',
       r24: rates.mumbai24k ?? rates.gold24k + 30,
       r22: rates.mumbai22k ?? rates.gold22k + 30,
     },
     {
-      name: 'HYDERABAD',
+      name: isTelugu ? 'హైదరాబాద్' : 'HYDERABAD',
       flag: '🌇',
       r24: rates.hyderabad24k ?? rates.gold24k + 10,
       r22: rates.hyderabad22k ?? rates.gold22k + 10,
     },
     {
-      name: 'PRODDATUR',
+      name: isTelugu ? 'ప్రొద్దుటూరు' : 'PRODDATUR',
       flag: '🏘️',
       r24: rates.proddatur24k ?? rates.gold24k + 20,
       r22: rates.proddatur22k ?? rates.gold22k + 20,
@@ -85,23 +87,25 @@ export default function LiveRatesTicker({ onOpenBooking }: Props) {
   });
 
   return (
-    <div className="bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 text-white text-[11px] sm:text-xs py-2 px-4 border-b border-gold-500/20 sticky top-0 z-50 shadow-md">
+    <div className="bg-gradient-to-r from-[#050B17] via-navy-900 to-[#050B17] text-white text-[11px] sm:text-xs py-2 px-4 border-b border-gold-500/20 sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 sm:gap-4">
 
-        {/* Left: Live Indicator + Telugu Tagline */}
+        {/* Left: Live Indicator + Telugu/English Tagline */}
         <div className="flex items-center gap-2.5 min-w-0">
           <span className="flex h-2.5 w-2.5 relative shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
           </span>
           <span className="text-gold-300 font-bold uppercase tracking-wider hidden sm:inline-block shrink-0">
-            LIVE RATES:
+            {isTelugu ? 'లైవ్ రేట్లు:' : 'BULLION RATES:'}
           </span>
           <span
             className="text-gold-200 font-semibold truncate"
-            style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+            style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
           >
-            ⚡ కాల్ చేసిన వెంటనే మీ దగ్గరకే వచ్చి బంగారు తాకట్టు విడిపించబడును
+            {isTelugu
+              ? '⚡ కాల్ చేసిన వెంటనే మీ దగ్గరకే వచ్చి బంగారు తాకట్టు విడిపించబడును'
+              : '⚡ Immediate Doorstep Settlement — We Clear Bank Gold Loans & Disburse Surplus Spot Cash'}
           </span>
         </div>
 
@@ -143,9 +147,9 @@ export default function LiveRatesTicker({ onOpenBooking }: Props) {
           {onOpenBooking && (
             <button
               onClick={onOpenBooking}
-              className="bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-navy-950 font-black px-3 py-1 rounded-lg text-[11px] shadow-sm transition-transform hover:scale-105 shrink-0"
+              className="bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-600 hover:to-amber-700 text-navy-950 font-black px-3 py-1 rounded-lg text-[11px] shadow-sm transition-transform hover:scale-105 shrink-0 cursor-pointer"
             >
-              Book Doorstep Visit
+              {isTelugu ? 'డోర్‌స్టెప్ విజిట్' : 'Book Visit'}
             </button>
           )}
 
@@ -155,10 +159,11 @@ export default function LiveRatesTicker({ onOpenBooking }: Props) {
             className="sm:hidden flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-black px-2.5 py-1 rounded-lg text-[11px] transition-colors shrink-0"
           >
             <Phone className="w-3 h-3" />
-            Call
+            {isTelugu ? 'కాల్' : 'Call'}
           </a>
         </div>
       </div>
     </div>
   );
 }
+

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ExternalLink, Play, Sparkles, CheckCircle2, Heart, Share2, ShieldCheck, Film } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Custom SVG icon for Instagram
 export function InstagramIcon({ className = 'w-5 h-5' }: { className?: string }) {
@@ -67,6 +68,7 @@ const REELS: ReelItem[] = [
 ];
 
 export default function InstagramShowcase() {
+  const { isTelugu } = useLanguage();
   const [activeTab, setActiveTab] = useState<'all' | string>('all');
 
   // Single-tap follow handler: tries deep link to Instagram native app on mobile, falls back to web
@@ -111,24 +113,40 @@ export default function InstagramShowcase() {
 
           <h2
             className="text-2xl sm:text-4xl md:text-5xl font-black text-navy-950 tracking-tight leading-tight mb-4"
-            style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+            style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
           >
-            ఇన్‌స్టాగ్రామ్‌లో{' '}
-            <span className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] bg-clip-text text-transparent">
-              VR GOLD
-            </span>{' '}
-            లైవ్ వీడియోలు &amp; రీల్స్
+            {isTelugu ? (
+              <>
+                ఇన్‌స్టాగ్రామ్‌లో{' '}
+                <span className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] bg-clip-text text-transparent">
+                  VR GOLD
+                </span>{' '}
+                లైవ్ వీడియోలు &amp; రీల్స్
+              </>
+            ) : (
+              <>
+                Official{' '}
+                <span className="bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] bg-clip-text text-transparent">
+                  VR GOLD
+                </span>{' '}
+                Instagram Channel &amp; Reels
+              </>
+            )}
           </h2>
 
           <p
             className="text-sm sm:text-base text-gray-700 font-semibold max-w-2xl mx-auto mb-2"
-            style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+            style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
           >
-            తాకట్టు బంగారం విడిపించే విధానం, స్పాట్ క్యాష్ చెల్లింపులు మరియు లైవ్ కస్టమర్ అనుభవాలను వీడియోలలో చూడండి!
+            {isTelugu
+              ? 'తాకట్టు బంగారం విడిపించే విధానం, స్పాట్ క్యాష్ చెల్లింపులు మరియు లైవ్ కస్టమర్ అనుభవాలను వీడియోలలో చూడండి!'
+              : 'Watch real customer testimonials, live doorstep bank clearance cases, and daily gold rate updates.'}
           </p>
 
           <p className="text-xs sm:text-sm text-gray-500 max-w-xl mx-auto">
-            Watch real cases of pledged gold release from banks, computerized purity testing, and follow our daily gold rate updates on Instagram.
+            {isTelugu
+              ? 'కంప్యూటరైజ్డ్ క్యారెట్‌మీటర్ టెస్టింగ్ మరియు తక్షణ నగదు చెల్లింపుల ప్రత్యక్ష రుజువులు.'
+              : 'Witness computerized Karatmeter testing and instant spot cash payouts directly in action.'}
           </p>
         </div>
 
@@ -184,9 +202,11 @@ export default function InstagramShowcase() {
 
                 <p
                   className="text-xs text-gray-600 leading-relaxed"
-                  style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+                  style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
                 >
-                  ⚡ తాకట్టు పెట్టిన బంగారాన్ని విడిపించి ఈ రోజు మార్కెట్ రేటుకు కొనబడును · డోర్‌స్టెప్ సేవ అందుబాటులో ఉంది.
+                  {isTelugu
+                    ? '⚡ తాకట్టు పెట్టిన బంగారాన్ని విడిపించి ఈ రోజు మార్కెట్ రేటుకు కొనబడును · డోర్‌స్టెప్ సేవ అందుబాటులో ఉంది.'
+                    : '⚡ Legal clearance of pledged bank gold loans at daily bullion rates · Doorstep facility available.'}
                 </p>
 
                 {/* Features Pills */}
@@ -205,7 +225,7 @@ export default function InstagramShowcase() {
                 className="w-full sm:w-auto md:w-full inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-black text-sm shadow-lg shadow-rose-500/25 hover:scale-105 active:scale-95 transition-all cursor-pointer group"
               >
                 <InstagramIcon className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
-                <span>సింగిల్ ట్యాప్‌తో ఫాలో అవ్వండి</span>
+                <span>{isTelugu ? 'సింగిల్ ట్యాప్‌తో ఫాలో అవ్వండి' : '1-Tap Follow on Instagram'}</span>
               </button>
 
               <a
@@ -219,7 +239,7 @@ export default function InstagramShowcase() {
               </a>
 
               <span className="text-[11px] text-gray-400 font-medium text-center">
-                1-Tap opens directly in your Instagram app
+                {isTelugu ? '1-ట్యాప్‌తో నేరుగా ఇన్‌స్టాగ్రామ్ యాప్‌లో ఓపెన్ అవుతుంది' : 'Opens directly in native Instagram app'}
               </span>
             </div>
 
@@ -236,7 +256,7 @@ export default function InstagramShowcase() {
                 : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
             }`}
           >
-            All 3 Reels
+            {isTelugu ? 'అన్ని రీల్స్ (3)' : 'All 3 Reels'}
           </button>
           {REELS.map((r, idx) => (
             <button

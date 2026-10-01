@@ -12,13 +12,16 @@ import {
   CheckCircle2,
   TrendingDown,
   Sparkles,
+  Landmark,
 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface Props {
   onOpenBooking?: (grams?: number, bank?: string) => void;
 }
 
 export default function LiveGoldCalculator({ onOpenBooking }: Props) {
+  const { isTelugu } = useLanguage();
   const [activeTab, setActiveTab] = useState<'SPOT_SALE' | 'PLEDGE_RELEASE'>('PLEDGE_RELEASE');
 
   // Rates fetched from live API
@@ -92,13 +95,25 @@ export default function LiveGoldCalculator({ onOpenBooking }: Props) {
         <div className="text-center max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gold-100 text-gold-900 text-xs font-bold mb-3 border border-gold-300">
             <Calculator className="w-3.5 h-3.5 text-gold-700" />
-            <span>Kadapa Dual-Engine Live Valuation Tool</span>
+            <span>
+              {isTelugu ? 'కడప లైవ్ గోల్డ్ వ్యాల్యుయేషన్ ఇంజిన్' : 'Kadapa Dual-Engine Live Valuation Tool'}
+            </span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-navy-950 tracking-tight">
-            Calculate Pledged Gold Release &amp; Cash Payout
+          <h2
+            className="text-2xl sm:text-4xl font-black text-navy-950 tracking-tight"
+            style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+          >
+            {isTelugu
+              ? 'తాకట్టు బంగారం విడిపించి ఎంత మిగులు నగదు వస్తుందో లెక్కించండి'
+              : 'Calculate Pledged Gold Release & Cash Payout'}
           </h2>
-          <p className="text-sm sm:text-base text-gray-600 mt-3">
-            See exactly how much surplus cash you will receive in hand after VR Gold clears your full bank loan.
+          <p
+            className="text-sm sm:text-base text-gray-600 mt-3"
+            style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
+          >
+            {isTelugu
+              ? 'VR GOLD మీ పూర్తి బ్యాంకు అప్పు కట్టిన తర్వాత మీ చేతికి మిగిలే నికర మిగులు నగదును ఇక్కడే లెక్కించండి.'
+              : 'See exactly how much surplus cash you will receive in hand after VR Gold clears your full bank loan.'}
           </p>
 
           {/* Mode Switch Tabs */}
@@ -113,7 +128,7 @@ export default function LiveGoldCalculator({ onOpenBooking }: Props) {
               }`}
             >
               <Building2 className="w-4 h-4" />
-              <span>Pledged Gold Release</span>
+              <span>{isTelugu ? 'తాకట్టు బంగారం విడుదల' : 'Pledged Gold Release'}</span>
             </button>
             <button
               type="button"
@@ -125,7 +140,7 @@ export default function LiveGoldCalculator({ onOpenBooking }: Props) {
               }`}
             >
               <Coins className="w-4 h-4" />
-              <span>Instant Spot Cash</span>
+              <span>{isTelugu ? 'తక్షణ స్పాట్ క్యాష్' : 'Instant Spot Cash'}</span>
             </button>
           </div>
         </div>
