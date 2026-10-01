@@ -7,63 +7,63 @@ import { useLanguage } from '@/context/LanguageContext';
 export default function TrustBar() {
   const { isTelugu } = useLanguage();
 
-  const trustPoints = [
+  const trustPillars = [
     {
       icon: Scale,
-      titleEn: 'Transparent Gold Valuation',
-      titleTe: 'పారదర్శకమైన బంగారు విలువ',
-      descEn: 'Rates aligned with live daily bullion benchmarks without concealed deductions.',
-      descTe: 'దాచిన కోతలు లేకుండా రోజువారీ ప్రత్యక్ష బులియన్ రేటు ఆధారిత లెక్కింపు.',
+      title: isTelugu ? 'పారదర్శక వ్యాల్యుయేషన్' : 'Transparent Valuation',
+      desc: isTelugu
+        ? 'నేటి లైవ్ మార్కెట్ రేటు ప్రకారమే లెక్కింపు. ఎటువంటి ఊహాజనిత లేదా రహస్య కోతలు ఉండవు.'
+        : 'Valuations pegged directly to daily bullion market rates with zero hidden deductions.',
     },
     {
       icon: Award,
-      titleEn: 'Verified Purity Testing',
-      titleTe: 'ధృవీకరించబడిన స్వచ్ఛత పరీక్ష',
-      descEn: 'Scientific, non-destructive German XRF Karatmeter testing conducted in your presence.',
-      descTe: 'మీ కళ్ల ముందే కంప్యూటరైజ్డ్ క్యారెట్‌మీటర్‌తో ఖచ్చితమైన స్వచ్ఛత పరీక్ష.',
+      title: isTelugu ? 'కంప్యూటరైజ్డ్ స్వచ్ఛత పరీక్ష' : 'Verified Purity Testing',
+      desc: isTelugu
+        ? 'జర్మన్ ఎక్స్-రే క్యారెట్‌మీటర్ పరీక్ష మీ ముందే జరుగుతుంది. ఆభరణాలు కరగబెట్టడం లేదా రాపిడి ఉండదు.'
+        : 'Non-destructive German XRF spectrometry in your presence with zero scratching or damage.',
     },
     {
       icon: FileText,
-      titleEn: 'Secure Documentation',
-      titleTe: 'చట్టబద్ధమైన డాక్యుమెంటేషన్',
-      descEn: 'Verifiable settlement receipts and clear digital valuation vouchers for every transaction.',
-      descTe: 'ప్రతి లావాదేవీకి డిజిటల్ వోచర్ మరియు అధికారిక రశీదు అందజేయబడుతుంది.',
+      title: isTelugu ? 'స్పష్టమైన డాక్యుమెంటేషన్' : 'Clear Documentation',
+      desc: isTelugu
+        ? 'ప్రతి లావాదేవీకి డిజిటల్ లేదా ప్రింటెడ్ వోచర్ మరియు అధికారిక రశీదు వెంటనే అందజేయబడును.'
+        : 'Formal digital settlement receipts detailing gross valuation, bank clearance, and net payout.',
     },
     {
       icon: UserCheck,
-      titleEn: 'Professional Assistance',
-      titleTe: 'అనుభవజ్ఞులైన నిపుణుల సేవలు',
-      descEn: 'Dedicated bank coordination team assisting with pledge release and doorstep clearance.',
-      descTe: 'తాకట్టు విడుదల మరియు డోర్‌స్టెప్ సేవల్లో తోడ్పడే నమ్మకమైన సిబ్బంది.',
+      title: isTelugu ? 'వృత్తిపరమైన సహాయం' : 'Professional Assistance',
+      desc: isTelugu
+        ? 'బ్యాంకుల్లో తాకట్టు రుణాలు క్లియర్ చేయడానికి మా ప్రతినిధి నేరుగా మీతో పాటు బ్రాంచ్‌కు వస్తారు.'
+        : 'Authorized field officers assist directly at bank counters to clear pledges and retrieve gold.',
     },
   ];
 
   return (
-    <section className="py-10 bg-white border-b border-slate-100">
+    <section className="py-10 bg-slate-50/60 border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {trustPoints.map((item, idx) => {
+          {trustPillars.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
                 key={idx}
-                className="flex items-start gap-3.5 p-4 rounded-xl bg-slate-50/60 border border-slate-200/70 hover:bg-slate-50 transition-colors"
+                className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-start gap-4"
               >
-                <div className="w-10 h-10 rounded-lg bg-navy-950 text-gold-400 flex items-center justify-center shrink-0 shadow-xs">
+                <div className="w-10 h-10 rounded-xl bg-[#060D1A] text-gold-400 flex items-center justify-center shrink-0">
                   <Icon className="w-5 h-5" />
                 </div>
                 <div>
                   <h3
-                    className="text-xs sm:text-sm font-bold text-slate-900 leading-snug"
+                    className="text-sm font-bold text-slate-900 mb-1"
                     style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
                   >
-                    {isTelugu ? item.titleTe : item.titleEn}
+                    {item.title}
                   </h3>
                   <p
-                    className="text-[11px] text-slate-600 mt-1 leading-relaxed"
+                    className="text-xs text-slate-600 leading-relaxed"
                     style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
                   >
-                    {isTelugu ? item.descTe : item.descEn}
+                    {item.desc}
                   </p>
                 </div>
               </div>

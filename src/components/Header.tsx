@@ -3,20 +3,20 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Menu, X, Calendar, Lock } from 'lucide-react';
+import { Phone, Menu, X, Scale, MessageSquare } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageToggle from '@/components/LanguageToggle';
 
-interface Props {
-  onOpenBooking?: () => void;
-}
-
-export default function Header({ onOpenBooking }: Props) {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isTelugu } = useLanguage();
 
+  const whatsappUrl = `https://wa.me/918978973576?text=${encodeURIComponent(
+    "Hi VR GOLD Kadapa! I want to check today's gold valuation / release pledged gold."
+  )}`;
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs">
+    <header className="sticky top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       
       {/* Top Institutional Micro-Strip */}
       <div className="bg-[#060D1A] text-slate-300 text-[11px] py-1 px-4 border-b border-slate-800">
@@ -31,7 +31,7 @@ export default function Header({ onOpenBooking }: Props) {
               style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
             >
               {isTelugu
-                ? 'కడప NGO కాలనీ బ్రాంచ్ · తక్షణ గోల్డ్ వ్యాల్యుయేషన్ & తాకట్టు విడుదల సేవలు'
+                ? 'కడప NGO కాలనీ బ్రాంచ్ · తక్షణ గోల్డ్ వ్యాల్యుయేషన్ & తాకట్టు విడుదల డెస్క్'
                 : 'Kadapa NGO Colony Branch · Live Bullion Valuation & Pledged Gold Release Desk'}
             </span>
           </div>
@@ -96,17 +96,16 @@ export default function Header({ onOpenBooking }: Props) {
           {/* Language Switcher */}
           <LanguageToggle variant="header" />
 
-          {/* Primary Action Button */}
-          {onOpenBooking && (
-            <button
-              onClick={onOpenBooking}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 text-xs font-black shadow-xs transition-transform hover:scale-102 cursor-pointer"
-            >
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{isTelugu ? 'విజిట్ బుక్ చేయండి' : 'Book a Visit'}</span>
-            </button>
-          )}
+          {/* Primary CTA: Get Gold Valuation */}
+          <Link
+            href="/#calculator"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-navy-950 text-xs font-black shadow-xs transition-transform hover:scale-[1.02]"
+          >
+            <Scale className="w-3.5 h-3.5" />
+            <span>{isTelugu ? 'బంగారం విలువ లెక్కించండి' : 'Get Gold Valuation'}</span>
+          </Link>
 
+          {/* Direct Helpline Call */}
           <a
             href="tel:8978973576"
             className="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors"
@@ -116,19 +115,23 @@ export default function Header({ onOpenBooking }: Props) {
             <span className="hidden xl:inline">8978973576</span>
           </a>
 
-          <Link
-            href="/admin"
-            className="inline-flex items-center p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-            title="Staff CRM"
+          {/* Subtle WhatsApp Icon */}
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat on WhatsApp"
+            className="inline-flex items-center p-2 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors"
+            title="WhatsApp Desk"
           >
-            <Lock className="w-3.5 h-3.5" />
-          </Link>
+            <MessageSquare className="w-3.5 h-3.5" />
+          </a>
         </div>
 
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+          className="lg:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100 cursor-pointer"
           aria-label="Toggle navigation menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -143,19 +146,15 @@ export default function Header({ onOpenBooking }: Props) {
           {/* Language Switcher */}
           <LanguageToggle variant="mobile" />
 
-          {/* Book Visit Primary CTA */}
-          {onOpenBooking && (
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenBooking();
-              }}
-              className="w-full text-center py-2.5 px-4 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 text-navy-950 font-black text-xs shadow-xs flex items-center justify-center gap-2"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>{isTelugu ? 'డోర్‌స్టెప్ విజిట్ బుక్ చేయండి' : 'Book a Visit'}</span>
-            </button>
-          )}
+          {/* Primary CTA */}
+          <Link
+            href="/#calculator"
+            onClick={() => setMobileMenuOpen(false)}
+            className="w-full text-center py-2.5 px-4 rounded-xl bg-gradient-to-r from-gold-500 to-amber-500 text-navy-950 font-black text-xs shadow-xs flex items-center justify-center gap-2"
+          >
+            <Scale className="w-4 h-4" />
+            <span>{isTelugu ? 'బంగారం విలువ లెక్కించండి' : 'Get Gold Valuation'}</span>
+          </Link>
 
           <div className="space-y-1 pt-1 font-semibold text-slate-800 text-xs">
             <Link
@@ -200,13 +199,6 @@ export default function Header({ onOpenBooking }: Props) {
             >
               {isTelugu ? 'కడప బ్రాంచ్ & కాంటాక్ట్' : 'Kadapa Branch & Contact'}
             </Link>
-            <Link
-              href="/track"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-gold-700 hover:bg-gold-50"
-            >
-              🔍 {isTelugu ? 'తాకట్టు రిఫరెన్స్ ట్రాకింగ్' : 'Track Pledge Status'}
-            </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100">
@@ -215,14 +207,16 @@ export default function Header({ onOpenBooking }: Props) {
               className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-slate-100 font-bold text-xs text-slate-800"
             >
               <Phone className="w-3.5 h-3.5 text-gold-600" />
-              <span>8978973576</span>
+              <span>Call Helpline</span>
             </a>
             <a
-              href="tel:8978977465"
-              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-slate-100 font-bold text-xs text-slate-800"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 p-2 rounded-lg bg-emerald-50 font-bold text-xs text-emerald-700"
             >
-              <Phone className="w-3.5 h-3.5 text-gold-600" />
-              <span>8978977465</span>
+              <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+              <span>WhatsApp</span>
             </a>
           </div>
 

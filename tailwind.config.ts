@@ -27,6 +27,14 @@ const config: Config = {
           900: "#0f172a",
           950: "#0b132b",
         },
+        surface: {
+          light: "#f8fafc",
+          dark: "#060D1A",
+        },
+      },
+      boxShadow: {
+        xs: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        "2xs": "0 1px 1px 0 rgba(0, 0, 0, 0.03)",
       },
     },
   },

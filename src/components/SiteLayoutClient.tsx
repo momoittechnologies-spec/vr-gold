@@ -1,44 +1,41 @@
 'use client';
 
-import React, { useState } from 'react';
-import LiveRatesTicker from '@/components/LiveRatesTicker';
+import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import BookVisitModal from '@/components/BookVisitModal';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { BookingProvider, useBooking } from '@/context/BookingContext';
 
 interface Props {
   children: React.ReactNode;
 }
 
+function BookingModalPortal() {
+  const { isModalOpen, modalGrams, modalBank, closeBooking } = useBooking();
+  return (
+    <BookVisitModal
+      isOpen={isModalOpen}
+      onClose={closeBooking}
+      initialGrams={modalGrams}
+      initialBank={modalBank}
+    />
+  );
+}
+
 export default function SiteLayoutClient({ children }: Props) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalGrams, setModalGrams] = useState<number | undefined>(undefined);
-  const [modalBank, setModalBank] = useState<string | undefined>(undefined);
-
-  const handleOpenBooking = (grams?: number, bank?: string) => {
-    setModalGrams(grams);
-    setModalBank(bank);
-    setIsModalOpen(true);
-  };
-
   return (
     <LanguageProvider>
-      <div className="min-h-screen flex flex-col font-sans selection:bg-gold-500 selection:text-white">
-        <LiveRatesTicker onOpenBooking={() => handleOpenBooking()} />
-        <Header onOpenBooking={() => handleOpenBooking()} />
-        <main className="flex-grow pb-16 sm:pb-0">{children}</main>
-        <WhatsAppFloat />
-        <Footer />
-
-        <BookVisitModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          initialGrams={modalGrams}
-          initialBank={modalBank}
-        />
-      </div>
+      <BookingProvider>
+        <div className="min-h-screen flex flex-col font-sans selection:bg-gold-500 selection:text-white">
+          <Header />
+          <main className="flex-grow pb-16 sm:pb-0">{children}</main>
+          <WhatsAppFloat />
+          <Footer />
+          <BookingModalPortal />
+        </div>
+      </BookingProvider>
     </LanguageProvider>
   );
 }

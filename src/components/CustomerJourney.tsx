@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ClipboardList, Calculator, CheckCircle2, Landmark, Wallet, ArrowRight } from 'lucide-react';
+import { MessageSquare, Calculator, Search, ShieldCheck, Banknote, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function CustomerJourney() {
@@ -11,107 +11,99 @@ export default function CustomerJourney() {
   const steps = [
     {
       step: '01',
-      icon: ClipboardList,
-      titleEn: 'Submit Requirement',
-      titleTe: 'వివరాలు తెలియజేయండి',
-      descEn: 'Contact our Kadapa desk or submit weight & bank pledge receipt details online.',
-      descTe: 'మా కడప డెస్క్‌ను సంప్రదించండి లేదా మీ బంగారం/తాకట్టు వివరాలు తెలియజేయండి.',
+      icon: MessageSquare,
+      title: isTelugu ? 'వివరాలు తెలియజేయండి' : 'Share Your Requirement',
+      desc: isTelugu
+        ? 'మీ వద్ద ఉన్న ఆభరణాలు లేదా బ్యాంకు తాకట్టు రశీదు వివరాలను మా కడప డెస్క్‌కు తెలియజేయండి.'
+        : 'Share your gold weight or bank loan receipt with our Kadapa team via phone or calculator.',
     },
     {
       step: '02',
       icon: Calculator,
-      titleEn: 'Initial Valuation',
-      titleTe: 'ప్రాథమిక విలువ లెక్కింపు',
-      descEn: 'Receive an accurate estimation benchmarked against today’s live bullion rate.',
-      descTe: 'నేటి ప్రత్యక్ష మార్కెట్ రేటు ఆధారంగా మీ బంగారానికి ప్రాథమిక అంచనా పొందండి.',
+      title: isTelugu ? 'ప్రాథమిక విలువ అంచనా' : 'Initial Gold Valuation',
+      desc: isTelugu
+        ? 'నేటి లైవ్ మార్కెట్ రేటు ప్రకారం మీ బంగారానికి వచ్చే స్థూల విలువను లెక్కించి చూపుతాము.'
+        : 'Receive an immediate estimate of gross value and surplus cash based on live bullion rates.',
     },
     {
       step: '03',
-      icon: CheckCircle2,
-      titleEn: 'Purity Assessment',
-      titleTe: 'స్వచ్ఛత నిర్ధారణ',
-      descEn: 'Computerized Karatmeter testing confirms exact gold karatage in your presence.',
-      descTe: 'మీ సమక్షంలోనే కంప్యూటరైజ్డ్ క్యారెట్‌మీటర్‌తో స్వచ్ఛత మరియు నికర బరువు నిర్ధారణ.',
+      icon: Search,
+      title: isTelugu ? 'స్వచ్ఛత నిర్ధారణ' : 'Purity Verification',
+      desc: isTelugu
+        ? 'జర్మన్ ఎక్స్-రే క్యారెట్‌మీటర్ ద్వారా ఎటువంటి రాపిడి లేకుండా 100% కచ్చితమైన స్వచ్ఛత నిర్ధారణ.'
+        : 'Non-destructive computerized Karatmeter testing confirms exact gold karat in your presence.',
     },
     {
       step: '04',
-      icon: Landmark,
-      titleEn: 'Bank Loan Clearance',
-      titleTe: 'బ్యాంకు లోన్ క్లోజింగ్',
-      descEn: 'For pledged gold, our officer visits your bank counter and pays the full balance.',
-      descTe: 'తాకట్టు ఉన్నట్లయితే, మా అధికారి నేరుగా మీ బ్యాంకుకు వచ్చి అప్పు మొత్తం చెల్లిస్తారు.',
+      icon: ShieldCheck,
+      title: isTelugu ? 'బ్యాంక్ లోన్ క్లియరెన్స్' : 'Processing & Bank Settlement',
+      desc: isTelugu
+        ? 'మా అధికారి నేరుగా మీ బ్యాంకుకు వచ్చి పూర్తి లోన్ మొత్తం చెల్లించి తాకట్టును విడిపిస్తారు.'
+        : 'Our executive visits your bank counter with full funds to clear principal, interest, and dues.',
     },
     {
       step: '05',
-      icon: Wallet,
-      titleEn: 'Instant Settlement',
-      titleTe: 'తక్షణ నగదు చెల్లింపు',
-      descEn: 'Collect your released gold or receive immediate cash / direct bank IMPS payout.',
-      descTe: 'మిగిలిన నికర మిగులు నగదును తక్షణమే క్యాష్ లేదా బ్యాంక్ ట్రాన్స్‌ఫర్ రూపంలో పొందండి.',
+      icon: Banknote,
+      title: isTelugu ? 'తక్షణ నగదు చెల్లింపు' : 'Settlement & Handover',
+      desc: isTelugu
+        ? 'బంగారం విడిపించిన వెంటనే మిగిలిన నికర మిగులు నగదును తక్షణమే క్యాష్ లేదా IMPS ద్వారా పొందండి.'
+        : 'Collect your gold or receive instant surplus funds via direct bank transfer or spot cash.',
     },
   ];
 
   return (
-    <section id="process" className="py-16 md:py-20 bg-white border-b border-slate-200/80">
+    <section id="process" className="py-16 md:py-20 bg-slate-50/70 border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold uppercase tracking-widest text-slate-500 bg-slate-200/70 px-3 py-1 rounded-full">
             {isTelugu ? 'పారదర్శక విధానం' : 'Transparent Workflow'}
           </span>
           <h2
             className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight mt-3"
             style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
           >
-            {isTelugu ? 'VR GOLD లో లావాదేవీ జరిగే 5 సరళమైన దశలు' : 'How VR GOLD Works'}
+            {isTelugu ? 'VR GOLD విధానం ఎలా పనిచేస్తుంది?' : 'How VR GOLD Works'}
           </h2>
           <p
             className="text-xs sm:text-sm text-slate-600 mt-2.5"
             style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
           >
             {isTelugu
-              ? 'మొదటి సంప్రదింపుల నుండి తుది సెటిల్‌మెంట్ వరకు స్పష్టమైన మరియు సురక్షితమైన ప్రక్రియ.'
-              : 'A clear, auditable 5-step process from initial inquiry to final funds disbursal.'}
+              ? 'మొదటి సంప్రదింపుల నుండి తుది నగదు చెల్లింపు వరకు ప్రతి దశలోనూ పూర్తి పారదర్శకత.'
+              : 'A simple, legally documented 5-step process designed for complete speed and customer confidence.'}
           </p>
         </div>
 
-        {/* 5-Step Process Timeline Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-3 relative">
-          {steps.map((item, idx) => {
-            const Icon = item.icon;
+        {/* 5-Step Process Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+          {steps.map((st) => {
+            const Icon = st.icon;
             return (
               <div
-                key={item.step}
-                className="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 hover:border-gold-400 hover:bg-white hover:shadow-sm transition-all flex flex-col justify-between"
+                key={st.step}
+                className="p-5 rounded-2xl bg-white border border-slate-200/90 hover:border-gold-400 shadow-xs transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-black text-gold-600 bg-gold-50 px-2 py-0.5 rounded border border-gold-200/60 font-mono">
-                      STEP {item.step}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-black font-mono text-gold-600 bg-gold-50 px-2 py-0.5 rounded border border-gold-200">
+                      {st.step}
                     </span>
-                    <div className="w-8 h-8 rounded-lg bg-navy-950 text-gold-400 flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4" />
-                    </div>
+                    <Icon className="w-4 h-4 text-slate-400" />
                   </div>
-
                   <h3
-                    className="text-sm font-bold text-slate-900 leading-snug"
+                    className="text-sm font-bold text-slate-900 mb-2 leading-snug"
                     style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
                   >
-                    {isTelugu ? item.titleTe : item.titleEn}
+                    {st.title}
                   </h3>
-
                   <p
-                    className="text-[11px] text-slate-600 mt-2 leading-relaxed"
+                    className="text-xs text-slate-600 leading-relaxed"
                     style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
                   >
-                    {isTelugu ? item.descTe : item.descEn}
+                    {st.desc}
                   </p>
-                </div>
-
-                <div className="pt-3 mt-3 border-t border-slate-200/60 flex items-center justify-between text-[10px] text-slate-400 font-semibold">
-                  <span>{idx < 4 ? 'Next Step →' : 'Complete ✓'}</span>
                 </div>
               </div>
             );
@@ -119,18 +111,18 @@ export default function CustomerJourney() {
         </div>
 
         {/* Bottom Context Banner */}
-        <div className="mt-10 p-4 rounded-xl bg-gold-50/60 border border-gold-200/70 max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="max-w-3xl mx-auto p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           <p
-            className="text-xs font-semibold text-gold-950"
+            className="text-xs text-slate-600"
             style={isTelugu ? { fontFamily: 'var(--font-telugu), sans-serif' } : {}}
           >
             {isTelugu
-              ? '💡 మీ వద్ద ఉన్న బ్యాంక్ లోన్ రశీదుతో నేరుగా సంప్రదిస్తే మరింత వేగంగా అంచనా వేయబడుతుంది.'
-              : '💡 Have your bank loan receipt ready for an instant, exact surplus calculation.'}
+              ? '💡 తాకట్టు విడిపించడానికి అవసరమైన మొత్తం 100% నిధులను మా సంస్థే బ్యాంకుకు చెల్లిస్తుంది.'
+              : '💡 VR GOLD provides 100% of the funds required to clear your bank loan directly at the counter.'}
           </p>
           <Link
-            href="#calculator"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-navy-950 text-white text-xs font-bold shrink-0 hover:bg-navy-900 transition-colors"
+            href="/#calculator"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-gold-300 text-xs font-bold shrink-0 transition-colors"
           >
             <span>{isTelugu ? 'కాలిక్యులేటర్ చూడండి' : 'Check Valuation'}</span>
             <ArrowRight className="w-3.5 h-3.5 text-gold-400" />

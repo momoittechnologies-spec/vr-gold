@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import ServiceSelector from '@/components/ServiceSelector';
 import LiveRatesDesk from '@/components/LiveRatesDesk';
 import TrustBar from '@/components/TrustBar';
 import CoreServices from '@/components/CoreServices';
@@ -15,6 +16,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ServiceSelector />
       <LiveRatesDesk />
       <TrustBar />
       <CoreServices />
