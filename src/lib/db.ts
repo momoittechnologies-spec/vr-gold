@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import crypto from 'crypto';
 
 export interface GoldRates {
@@ -9,6 +10,16 @@ export interface GoldRates {
   gold18k: number;
   silver: number;
   buyingMarginPercent: number;
+  // Multi-city live rates (fetched from API, admin-overridable)
+  mumbai24k?: number;
+  mumbai22k?: number;
+  hyderabad24k?: number;
+  hyderabad22k?: number;
+  proddatur24k?: number;
+  proddatur22k?: number;
+  autoSyncLiveApi?: boolean;
+  liveApiSource?: 'live' | 'fallback';
+  liveApiSyncedAt?: string;
   updatedAt: string;
   updatedBy: string;
 }
@@ -89,8 +100,27 @@ export interface DatabaseSchema {
   users: User[];
 }
 
-const DATA_DIR = path.join(process.cwd(), '.data');
-const DB_FILE = path.join(DATA_DIR, 'vr_gold_database.json');
+// ============================================
+// Storage: Vercel-safe /tmp fallback + in-memory cache
+// ============================================
+
+// Vercel's serverless runtime mounts the project as read-only except /tmp.
+// Detect VERCEL env flag OR simply always use os.tmpdir() which is writable everywhere.
+function getDbFile(): string {
+  const tmpDir = path.join(os.tmpdir(), 'vr_gold_db');
+  try {
+    if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+  } catch {
+    // If we can't create the dir (edge case), file will fail gracefully below
+  }
+  return path.join(tmpDir, 'vr_gold_database.json');
+}
+
+// globalThis cache: warm Lambda re-use means this persists across requests in same process
+declare global {
+  // eslint-disable-next-line no-var
+  var __vrGoldDb: DatabaseSchema | undefined;
+}
 
 function hashPassword(password: string, salt: string): string {
   return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
@@ -241,34 +271,50 @@ function getInitialDatabase(): DatabaseSchema {
 }
 
 function ensureDb(): DatabaseSchema {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
+  // Return from in-memory cache if available (warm Lambda re-use)
+  if (globalThis.__vrGoldDb) return globalThis.__vrGoldDb;
+
+  const DB_FILE = getDbFile();
 
   if (!fs.existsSync(DB_FILE)) {
     const initial = getInitialDatabase();
-    fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
+    } catch {
+      // If write fails (unlikely), operate purely in-memory
+    }
+    globalThis.__vrGoldDb = initial;
     return initial;
   }
 
   try {
     const raw = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    globalThis.__vrGoldDb = parsed;
+    return parsed;
   } catch (error) {
-    console.error('Error reading database file, recreating initial database:', error);
+    console.error('[VR Gold DB] Error reading database, using fresh DB:', error);
     const initial = getInitialDatabase();
-    fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
+    globalThis.__vrGoldDb = initial;
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
+    } catch { /* ignore */ }
     return initial;
   }
 }
 
 function saveDb(data: DatabaseSchema): void {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+  // Always update in-memory cache first
+  globalThis.__vrGoldDb = data;
+
+  const DB_FILE = getDbFile();
+  try {
+    const tmpFile = `${DB_FILE}.tmp.${Date.now()}`;
+    fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(tmpFile, DB_FILE);
+  } catch (err) {
+    console.warn('[VR Gold DB] Could not persist to disk (in-memory only):', err instanceof Error ? err.message : err);
   }
-  const tmpFile = `${DB_FILE}.tmp.${Date.now()}`;
-  fs.writeFileSync(tmpFile, JSON.stringify(data, null, 2), 'utf-8');
-  fs.renameSync(tmpFile, DB_FILE);
 }
 
 // ============================================

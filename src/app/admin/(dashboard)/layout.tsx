@@ -3,10 +3,10 @@ import { getSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
 
-  // If unauthorized, redirect to login
+  // Only the (dashboard) group pages are protected. Login page is outside this group.
   if (!session) {
     redirect('/admin/login');
   }

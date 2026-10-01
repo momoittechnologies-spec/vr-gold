@@ -1,11 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, ShieldCheck, CheckCircle2, ArrowRight, Sparkles, MapPin, Zap } from "lucide-react";
+import { Phone, ShieldCheck, CheckCircle2, ArrowRight, Sparkles, MapPin, Zap, Star, Clock, BadgeCheck } from "lucide-react";
+
+interface RatesData {
+  gold24k: number;
+  gold22k: number;
+}
 
 export default function Hero() {
+  const [rates, setRates] = useState<RatesData>({ gold24k: 7520, gold22k: 6890 });
+
+  useEffect(() => {
+    fetch("/api/rates")
+      .then((r) => r.json())
+      .then((d) => { if (d.rates) setRates(d.rates); })
+      .catch(() => {});
+  }, []);
+
   return (
     <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-b from-amber-50/60 via-white to-white">
       {/* Decorative Gold Ambient Glows */}
@@ -15,6 +29,7 @@ export default function Hero() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
         {/* Official Brand Emblem Badge */}
         <div className="inline-block mb-4">
           <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden bg-white p-1.5 border-2 border-gold-400 shadow-xl shadow-gold-500/25 mx-auto hover:scale-105 transition-transform">
@@ -40,36 +55,67 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* Telugu Headline Callout */}
-        <div className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white font-extrabold text-sm sm:text-base md:text-lg px-4 py-2 rounded-2xl max-w-2xl mx-auto shadow-md mb-6 animate-pulse">
-          మీరు తాకట్టు పెట్టిన బంగారానికి అధిక వడ్డీ చెల్లిస్తున్నారా!
+        {/* Telugu Urgent Banner */}
+        <div
+          className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white font-extrabold text-sm sm:text-base md:text-lg px-5 py-2.5 rounded-2xl max-w-2xl mx-auto shadow-md mb-6 animate-pulse"
+          style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+        >
+          ⚠️ మీరు బ్యాంకులో తాకట్టు పెట్టిన బంగారానికి అధిక వడ్డీ కట్టి అష్టకష్టాలు పడుతున్నారా?
         </div>
 
-        {/* Grand Headline */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-navy-950 tracking-tight leading-[1.15] max-w-4xl mx-auto mb-6">
-          తాకట్టు పెట్టిన బంగారాన్ని విడిపించి{" "}
+        {/* Grand Telugu Headline */}
+        <h1
+          className="text-3xl sm:text-5xl md:text-6xl font-black text-navy-950 tracking-tight leading-[1.2] max-w-4xl mx-auto mb-4"
+          style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+        >
+          తాకట్టు బంగారాన్ని విడిపించి{" "}
           <span className="bg-gradient-to-r from-amber-600 via-gold-600 to-amber-700 bg-clip-text text-transparent">
-            ఈ రోజు మార్కెట్ రేటుకు
+            నేడు మార్కెట్ రేటుకే
           </span>{" "}
-          కొనబడును.
+          కొనుగోలు చేయబడును
         </h1>
 
-        <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto mb-8 font-medium leading-relaxed">
-          Release your pledged gold from nationalized banks, cooperative societies, or private finance companies (Muthoot, Manappuram) with 100% transparent market rate settlement.
+        {/* Telugu Subheading */}
+        <p
+          className="text-lg sm:text-xl text-emerald-800 font-bold max-w-2xl mx-auto mb-3"
+          style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+        >
+          ఒక్క కాల్‌తో మీ ఇంటికే వచ్చి, బ్యాంకు అప్పు తీర్చి, మిగతా డబ్బు వెంటనే చేతిలో పెడతాం.
         </p>
 
-        {/* Killer USP Highlight Card */}
+        <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+          Release your pledged gold from SBI, Canara, APGB, Andhra Bank, Muthoot, Manappuram &amp; all private finance companies — with 100% transparent market rate settlement and zero hidden charges.
+        </p>
+
+        {/* Live Rate Display */}
+        <div className="inline-flex items-center gap-3 bg-navy-950 text-white px-5 py-2.5 rounded-xl shadow-lg mb-6 border border-gold-500/30">
+          <span className="flex h-2.5 w-2.5 relative shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          </span>
+          <span className="text-gold-300 font-bold text-sm uppercase tracking-wide">Today&apos;s Kadapa Rate:</span>
+          <span className="text-white font-black text-base">24K ₹{rates.gold24k.toLocaleString("en-IN")}/g</span>
+          <span className="text-gold-400 font-bold text-sm">| 22K ₹{rates.gold22k.toLocaleString("en-IN")}/g</span>
+        </div>
+
+        {/* Doorstep USP Card */}
         <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border-2 border-emerald-500/60 max-w-3xl mx-auto mb-8 shadow-sm text-left sm:text-center flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-md">
               <Zap className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 block">
-                Exclusive Doorstep Service in Kadapa
+              <span
+                className="text-sm font-black text-emerald-900 block"
+                style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+              >
+                🏠 మీ ఇంటికే వచ్చే డోర్‌స్టెప్ సేవ
               </span>
-              <p className="text-sm sm:text-base font-black text-emerald-950">
-                “కాల్ చేసిన వెంటనే మీ దగ్గరకే వచ్చి డబ్బులు కట్టి విడిపించబడును.”
+              <p
+                className="text-xs sm:text-sm font-semibold text-emerald-800 mt-0.5"
+                style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+              >
+                "కాల్ చేసిన వెంటనే బ్యాంకుకు తీసుకెళ్ళి, లోన్ క్లోజ్ చేసి డబ్బులు ఇస్తాం."
               </p>
             </div>
           </div>
@@ -78,7 +124,7 @@ export default function Hero() {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shrink-0 transition-transform hover:scale-105"
           >
             <Phone className="w-4 h-4" />
-            <span>Call for Doorstep Visit</span>
+            <span>ఇప్పుడే కాల్ చేయండి</span>
           </a>
         </div>
 
@@ -89,7 +135,7 @@ export default function Hero() {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-gold-500 via-amber-600 to-gold-600 hover:from-gold-600 hover:to-amber-700 text-white font-extrabold text-sm shadow-lg shadow-gold-500/30 hover:scale-[1.02] transition-all"
           >
             <Phone className="w-4 h-4" />
-            <span>Call Now: 8978973576</span>
+            <span>Call: 8978973576</span>
           </a>
           <a
             href="tel:8978977465"
@@ -102,24 +148,75 @@ export default function Hero() {
             href="#calculator"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-gray-800 font-bold text-sm shadow-xs transition-colors"
           >
-            <span>Check Live Gold Value</span>
+            <span>బంగారం విలువ చెక్ చేయండి</span>
             <ArrowRight className="w-4 h-4 text-gold-600" />
           </Link>
         </div>
 
-        {/* Trust Badges */}
+        {/* 3-Pillar Trust Cards — Bilingual */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
+          <div className="bg-white rounded-2xl border border-gold-200 shadow-sm p-4 text-left">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 border border-gold-200 flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5 text-gold-600" />
+              </div>
+              <span className="text-xs font-black uppercase text-navy-950 tracking-wide">Highest Rate Guaranteed</span>
+            </div>
+            <p
+              className="text-sm font-bold text-emerald-800"
+              style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+            >
+              మార్కెట్‌లో అత్యధిక రేటు — మేమే ఇస్తాం
+            </p>
+            <p className="text-xs text-gray-500 mt-1">Daily MCX bullion rate, verified by Karatmeter</p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-emerald-200 shadow-sm p-4 text-left">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center shrink-0">
+                <Clock className="w-5 h-5 text-emerald-600" />
+              </div>
+              <span className="text-xs font-black uppercase text-navy-950 tracking-wide">Same-Day Settlement</span>
+            </div>
+            <p
+              className="text-sm font-bold text-emerald-800"
+              style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+            >
+              ఈ రోజే బ్యాంకు లోన్ క్లోజ్ — ఈ రోజే డబ్బు చేతిలో
+            </p>
+            <p className="text-xs text-gray-500 mt-1">Instant IMPS / RTGS / Cash payout after bank clearance</p>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-blue-200 shadow-sm p-4 text-left">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
+                <BadgeCheck className="w-5 h-5 text-blue-600" />
+              </div>
+              <span className="text-xs font-black uppercase text-navy-950 tracking-wide">Zero Hidden Charges</span>
+            </div>
+            <p
+              className="text-sm font-bold text-emerald-800"
+              style={{ fontFamily: 'var(--font-telugu), sans-serif' }}
+            >
+              దాచిన చార్జీలు శూన్యం — పూర్తి పారదర్శకత
+            </p>
+            <p className="text-xs text-gray-500 mt-1">No processing fees. No deductions. Rate is rate.</p>
+          </div>
+        </div>
+
+        {/* Trust Badges Row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto pt-6 border-t border-gray-200/80 text-xs">
           <div className="flex items-center justify-center gap-2 font-bold text-gray-700 bg-gray-50/80 py-2.5 px-3 rounded-xl border border-gray-200">
             <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>100% Karatmeter Purity</span>
+            <span>Karatmeter Purity</span>
           </div>
           <div className="flex items-center justify-center gap-2 font-bold text-gray-700 bg-gray-50/80 py-2.5 px-3 rounded-xl border border-gray-200">
             <CheckCircle2 className="w-4 h-4 text-gold-600 shrink-0" />
-            <span>Spot Cash / Instant UPI</span>
+            <span>Spot Cash / UPI</span>
           </div>
           <div className="flex items-center justify-center gap-2 font-bold text-gray-700 bg-gray-50/80 py-2.5 px-3 rounded-xl border border-gray-200">
-            <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
-            <span>Zero Processing Fees</span>
+            <Star className="w-4 h-4 text-amber-500 shrink-0" />
+            <span>All Banks Covered</span>
           </div>
           <div className="flex items-center justify-center gap-2 font-bold text-gray-700 bg-gray-50/80 py-2.5 px-3 rounded-xl border border-gray-200">
             <MapPin className="w-4 h-4 text-red-600 shrink-0" />
