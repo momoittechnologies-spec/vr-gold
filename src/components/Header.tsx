@@ -1,11 +1,15 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Phone, MapPin, ShieldCheck, Menu, X, Coins, Sparkles } from "lucide-react";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Phone, MapPin, Menu, X, ShieldCheck, Search, Lock, Calendar } from 'lucide-react';
 
-export default function Header() {
+interface Props {
+  onOpenBooking?: () => void;
+}
+
+export default function Header({ onOpenBooking }: Props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -57,40 +61,56 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-gray-700">
-          <Link href="#calculator" className="hover:text-gold-600 transition-colors">
+        <nav className="hidden lg:flex items-center gap-5 text-sm font-semibold text-gray-700">
+          <Link href="/#calculator" className="hover:text-gold-600 transition-colors">
             Gold Calculator
           </Link>
-          <Link href="#doorstep" className="hover:text-gold-600 transition-colors">
+          <Link href="/#doorstep" className="hover:text-gold-600 transition-colors">
             Doorstep Service
           </Link>
-          <Link href="#process" className="hover:text-gold-600 transition-colors">
+          <Link href="/#process" className="hover:text-gold-600 transition-colors">
             How It Works
           </Link>
-          <Link href="#why-us" className="hover:text-gold-600 transition-colors">
-            Why VR Gold
-          </Link>
-          <Link href="#location" className="hover:text-gold-600 transition-colors">
+          <Link href="/#location" className="hover:text-gold-600 transition-colors">
             Kadapa Branch
+          </Link>
+          <Link
+            href="/track"
+            className="inline-flex items-center gap-1 text-gold-700 hover:text-gold-800 font-bold bg-gold-50 px-2.5 py-1 rounded-lg border border-gold-200 transition-colors"
+          >
+            <Search className="w-3.5 h-3.5" />
+            <span>Track Pledge</span>
           </Link>
         </nav>
 
         {/* Action Buttons */}
         <div className="hidden sm:flex items-center gap-2.5">
+          {onOpenBooking && (
+            <button
+              onClick={onOpenBooking}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gold-50 hover:bg-gold-100 text-gold-950 border border-gold-300 text-xs font-black transition-all cursor-pointer"
+            >
+              <Calendar className="w-3.5 h-3.5 text-gold-700" />
+              <span>Book Visit</span>
+            </button>
+          )}
+
           <a
             href="tel:8978973576"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-navy-950 text-xs font-bold transition-all"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-navy-950 text-xs font-bold transition-all"
           >
             <Phone className="w-3.5 h-3.5 text-gold-600" />
             <span>8978973576</span>
           </a>
-          <a
-            href="tel:8978977465"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-gold-500 via-amber-600 to-gold-600 hover:from-gold-600 hover:to-amber-700 text-white text-xs font-bold shadow-md shadow-gold-500/20 hover:scale-[1.02] transition-all"
+
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-navy-950 hover:bg-navy-900 text-gold-300 text-xs font-bold shadow-xs transition-colors"
+            title="VR Gold Staff & Management Portal"
           >
-            <Phone className="w-3.5 h-3.5" />
-            <span>Call 8978977465</span>
-          </a>
+            <Lock className="w-3 h-3 text-gold-400" />
+            <span>Staff CRM</span>
+          </Link>
         </div>
 
         {/* Mobile Hamburger */}
@@ -105,36 +125,56 @@ export default function Header() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-4 space-y-3 shadow-lg">
+        <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-4 space-y-2 shadow-lg text-sm">
+          {onOpenBooking && (
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenBooking();
+              }}
+              className="w-full text-left py-2.5 px-3 rounded-xl bg-gold-500 text-navy-950 font-black flex items-center justify-between"
+            >
+              <span>🚗 Book Doorstep Bank Release</span>
+              <span>→</span>
+            </button>
+          )}
           <Link
-            href="#calculator"
+            href="/#calculator"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
           >
             💰 Live Gold Rate Calculator
           </Link>
           <Link
-            href="#doorstep"
+            href="/track"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg font-bold text-gold-700 hover:bg-gold-50"
+          >
+            🔍 Track Your Pledge Status
+          </Link>
+          <Link
+            href="/#doorstep"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
           >
             🚗 Doorstep Bank Clearance
           </Link>
           <Link
-            href="#process"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
-          >
-            🔄 How Pledged Gold Release Works
-          </Link>
-          <Link
-            href="#location"
+            href="/#location"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg font-bold text-gray-900 hover:bg-gold-50"
           >
             📍 NGO Colony Branch Location
           </Link>
-          <div className="grid grid-cols-2 gap-2 pt-2 border-t border-gray-100">
+          <Link
+            href="/admin"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-100"
+          >
+            🔒 VR Gold Staff &amp; CRM Login
+          </Link>
+
+          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">
             <a
               href="tel:8978973576"
               className="flex items-center justify-center gap-1.5 p-2.5 rounded-lg bg-gray-100 font-bold text-xs text-navy-950"
